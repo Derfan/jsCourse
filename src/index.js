@@ -69,7 +69,7 @@ function returnCounter(number) {
  */
 function bindFunction(fn) {
 	var arr = [];
-	for (var i = 1; i < arguments.length; i++) {
+	for (var i = 0; i < arguments.length; i++) {
 		arr.push(arguments[i]);
 	}
 
