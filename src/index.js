@@ -10,23 +10,19 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
-    if (array.length == 0) {
+    if (array.length == 0 || !(Array.isArray(array))) {
         throw new Error('empty array');
     }
-    if (typeof fn != 'function') {
+    if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
     }
-    try {
-        let count = 0;
 
-        for (let i = 0; i < array.length; i++) {
-            fn(array[i]) ? count++ : count;
-        }
-
-        return (count === array.length) ? true : false;
-    } catch (e) {
-        return e.message;
+    for (let i = 0; i < array.length; i++) {
+        if (fn(array[i]) === false) {
+            return false;
+        } 
     }
+    return true
 }
 
 /*
@@ -39,23 +35,19 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
-    if (array.length == 0) {
+    if (array.length == 0 || !(Array.isArray(array))) {
         throw new Error('empty array');
     }
-    if (typeof fn != 'function') {
+    if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
     }
-    try {
-        let count = 0;
 
-        for (let i = 0; i < array.length; i++) {
-            fn(array[i]) ? count++ : count;
+    for (let i = 0; i < array.length; i++) {
+        if (fn(array[i]) === true) {
+            return true;
         }
-
-        return (count > 0) ? true : false;
-    } catch (e) {
-        return e.message;
     }
+    return false;
 }
 
 /*
