@@ -71,7 +71,6 @@ function returnBadArguments(fn) {
             arr.push(arguments[i]);
         }
     }
-    
     return arr;
 }
 
@@ -107,8 +106,9 @@ function calculator(number = 0) {
                 values.forEach((val) => {
                     if (val === 0) {
                         throw new Error('division by 0');
+                    } else {
+                        number /= val;
                     }
-                    number /= val;
                 });
                 return number;
             },
