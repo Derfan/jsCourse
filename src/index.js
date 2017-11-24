@@ -20,7 +20,7 @@ function isAllTrue(array, fn) {
     for (let val of array) {
         if (fn(val) === false) {
             return false;
-        } 
+        }
     }
     return true
 }
@@ -95,15 +95,15 @@ function calculator(number = 0) {
     }
     try {
         let obj = {
-            sum: function (...values) {
+            sum(...values) {
                 values.forEach(val => number += val);
                 return number;
             },
-            dif: function (...values) {
+            dif(...values) {
                 values.forEach(val => number -= val);
                 return number;
             },
-            div: function (...values) {
+            div(...values) {
                 values.forEach((val) => {
                     if (val === 0) {
                         throw new Error('division by 0');
@@ -112,7 +112,7 @@ function calculator(number = 0) {
                 });
                 return number;
             },
-            mul: function (...values) {
+            mul(...values) {
                 values.forEach(val => number *= val);
                 return number;
             }
