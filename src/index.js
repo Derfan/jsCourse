@@ -10,14 +10,14 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
-    if (array.length == 0 || !(Array.isArray(array))) {
+    if (!(typeof array === 'object' && array.hasOwnProperty('length')) || array.length == 0) {
         throw new Error('empty array');
     }
     if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
     }
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i in array) {
         if (fn(array[i]) === false) {
             return false;
         } 
@@ -35,14 +35,14 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
-    if (array.length == 0 || !(Array.isArray(array))) {
+    if (!(typeof array === 'object' && array.hasOwnProperty('length')) || array.length == 0) {
         throw new Error('empty array');
     }
     if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
     }
 
-    for (let i = 0; i < array.length; i++) {
+    for (let i in array) {
         if (fn(array[i]) === true) {
             return true;
         }
