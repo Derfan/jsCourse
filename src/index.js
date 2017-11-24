@@ -10,7 +10,7 @@
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
-    if (!(typeof array === 'object' && array.hasOwnProperty('length')) || array.length == 0) {
+    if (!(typeof array === 'object' && array.hasOwnProperty('length')) || array.length === 0) {
         throw new Error('empty array');
     }
     if (typeof fn !== 'function') {
