@@ -17,8 +17,8 @@ function isAllTrue(array, fn) {
         throw new Error('fn is not a function');
     }
 
-    for (let i in array) {
-        if (fn(array[i]) === false) {
+    for (let val of array) {
+        if (fn(val) === false) {
             return false;
         } 
     }
@@ -42,8 +42,8 @@ function isSomeTrue(array, fn) {
         throw new Error('fn is not a function');
     }
 
-    for (let i in array) {
-        if (fn(array[i]) === true) {
+    for (let val of array) {
+        if (fn(val) === true) {
             return true;
         }
     }
@@ -95,35 +95,28 @@ function calculator(number = 0) {
     }
     try {
         let obj = {
-            sum: function () {
-                for (let i = 0; i < arguments.length; i++) {
-                    number += arguments[i];
-                }
+            sum: function (...values) {
+                values.forEach(val => number += val);
                 return number;
             },
-            dif: function () {
-                for (let i = 0; i < arguments.length; i++) {
-                    number -= arguments[i];
-                }
+            dif: function (...values) {
+                values.forEach(val => number -= val);
                 return number;
             },
-            div: function () {
-                for (let i = 0; i < arguments.length; i++) {
-                    if (arguments[i] === 0) {
+            div: function (...values) {
+                values.forEach((val) => {
+                    if (val === 0) {
                         throw new Error('division by 0');
                     }
-                    number /= arguments[i];
-                }
+                    number /= val;
+                });
                 return number;
             },
-            mul: function () {
-                for (let i = 0; i < arguments.length; i++) {
-                    number *= arguments[i];
-                }
+            mul: function (...values) {
+                values.forEach(val => number *= val);
                 return number;
             }
         };
-
         return obj;
     } catch (e) {
         return e.message;
