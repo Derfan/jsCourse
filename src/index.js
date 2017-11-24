@@ -35,7 +35,7 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
-    if (!(typeof array === 'object' && array.hasOwnProperty('length')) || array.length == 0) {
+    if (!(typeof array === 'object' && array.hasOwnProperty('length')) || array.length === 0) {
         throw new Error('empty array');
     }
     if (typeof fn !== 'function') {
@@ -61,7 +61,7 @@ function isSomeTrue(array, fn) {
 function returnBadArguments(fn) {
     let arr = [];
 
-    if (typeof fn != 'function') {
+    if (typeof fn !== 'function') {
         throw new Error('fn is not a function');
     }
     for (let i = 1; i < arguments.length; i++) {
@@ -90,7 +90,7 @@ function returnBadArguments(fn) {
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
 function calculator(number = 0) {
-    if (typeof number != 'number') {
+    if (typeof number !== 'number') {
         throw new Error('number is not a number');
     }
     try {
