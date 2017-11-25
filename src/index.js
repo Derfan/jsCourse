@@ -37,6 +37,12 @@ function reduce(array, fn, initial) {
  Функция должна удалить указанное свойство из указанного объекта
  */
 function deleteProperty(obj, prop) {
+    for (let i in obj) {
+        if (i === prop) {
+            delete obj[i];
+        }
+    }
+    return obj
 }
 
 /*
@@ -45,6 +51,9 @@ function deleteProperty(obj, prop) {
  Функция должна проверить существует ли укзаанное свойство в указанном объекте
  */
 function hasProperty(obj, prop) {
+    for (let i in obj) {
+        return (i === prop) ? true : false;
+    }
 }
 
 /*
