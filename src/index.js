@@ -79,10 +79,10 @@ function upperProps(obj) {
  Задача 8 *:
  Напишите аналог встроенного метода slice для работы с массивами
  */
-function slice(array, from, to) {
+function slice(array, from = 0, to = array.length) {
     let res = [];
-    let start = (start < 0) ? from + array.length : from || 0;
-    let end = (to < 0) ? to + array.length : to || array.length;
+    let start = (start < 0) ? from + array.length : from;
+    let end = (to < 0) ? to + array.length : to;
 
     if (from === 0 && to === 0) {
         return res;
