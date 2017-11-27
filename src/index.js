@@ -52,7 +52,7 @@ function deleteProperty(obj, prop) {
  Функция должна проверить существует ли укзаанное свойство в указанном объекте
  */
 function hasProperty(obj, prop) {
-    return (prop in obj) ? true : false;
+    return prop in obj;
 }
 
 /*
@@ -60,11 +60,7 @@ function hasProperty(obj, prop) {
  Функция должна получить все перечисляемые свойства объекта и вернуть их в виде массива
  */
 function getEnumProps(obj) {
-    let res = [];
-    for (let i in obj) {
-        res.push(i);
-    }
-    return res;
+    return Object.keys(obj);;
 }
 
 /*
