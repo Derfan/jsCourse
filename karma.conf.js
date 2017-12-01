@@ -22,7 +22,7 @@ module.exports = function(config) {
         port: 9876,
         browsers: ['ChromeHeadless'], // или Chrome или Firefox
         captureTimeout: 20000,
-        singleRun: false,
+        singleRun: true,
         plugins: [
             require('karma-mocha'),
             require('karma-chai'),
