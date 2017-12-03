@@ -68,12 +68,25 @@ function createDiv() {
  */
 function addListeners(target) {
     target.addEventListener('mousedown', (e) => {
+        let coords = getCoords(target);
+        let shiftX = e.pageX - coords.left;
+        let shiftY = e.pageY - coords.top;
+
         let moveTo = (e) => {
-            target.style.left = e.pageX - target.offsetWidth / 2 + 'px';
-            target.style.top = e.pageY - target.offsetHeight / 2 + 'px';
+            target.style.left = e.pageX - shiftX + 'px';
+            target.style.top = e.pageY - shiftY + 'px';
         };
         moveTo(e);
+        
         document.onmousemove = e => moveTo(e);
+
+        function getCoords(elem) {
+            let box = elem.getBoundingClientRect();
+            return {
+                top: box.top + pageYOffset,
+                left: box.left + pageXOffset
+            };
+        };
 
         target.addEventListener('mouseup', () => document.onmousemove = null);
     });
