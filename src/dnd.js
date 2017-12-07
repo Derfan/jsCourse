@@ -71,22 +71,23 @@ function addListeners(target) {
         let coords = getCoords(target);
         let shiftX = e.pageX - coords.left;
         let shiftY = e.pageY - coords.top;
-
         let moveTo = (e) => {
             target.style.left = e.pageX - shiftX + 'px';
             target.style.top = e.pageY - shiftY + 'px';
         };
+
         moveTo(e);
-        
+
         document.onmousemove = e => moveTo(e);
 
         function getCoords(elem) {
             let box = elem.getBoundingClientRect();
+
             return {
                 top: box.top + pageYOffset,
                 left: box.left + pageXOffset
             };
-        };
+        }
 
         target.addEventListener('mouseup', () => document.onmousemove = null);
     });
