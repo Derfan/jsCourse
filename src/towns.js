@@ -1,3 +1,5 @@
+import { loadAndSortTowns } from './index';
+
 /**
  * ДЗ 6.2 - Создать страницу с текстовым полем для фильтрации городов
  *
@@ -36,7 +38,7 @@ let homeworkContainer = document.querySelector('#homework-container');
  * @return {Promise<Array<{name: string}>>}
  */
 function loadTowns() {
-    return require('./index').loadAndSortTowns();
+    return loadAndSortTowns();
 }
 
 /**
@@ -60,39 +62,61 @@ let loadingBlock = homeworkContainer.querySelector('#loading-block');
 let filterBlock = homeworkContainer.querySelector('#filter-block');
 let filterInput = homeworkContainer.querySelector('#filter-input');
 let filterResult = homeworkContainer.querySelector('#filter-result');
-let filterFailed = homeworkContainer.querySelector('#filter-failed');
-let filterReload = homeworkContainer.querySelector('#filter-reload');
-let towns;
+let townsPromise;
 
-function tryToLoadTowns() {
-    filterBlock.style.display = 'none';
-    filterFailed.style.display = 'none';
+function filterFunc() {
+    let filterList;
 
-    loadTowns().then((response) => {
-        towns = response;
+    function dispBlock() {
         loadingBlock.style.display = 'none';
         filterBlock.style.display = 'block';
-        filterFailed.style.display = 'none';
-    }).catch(() => {
-        loadingBlock.style.display = 'none';
-        filterBlock.style.display = 'none';
-        filterFailed.style.display = 'block';
-    });
+    }
+
+    function createElement(elem, text) {
+        let res = document.createElement(elem);
+
+        res.textContent = text;
+
+        return res;
+    }
+
+    loadTowns()
+        .then(loadList => {
+            dispBlock();
+            filterList = loadList;
+            filterInput.addEventListener('keyup', () => {
+                let value = filterInput.value.trim();
+
+                filterResult.innerHTML = '';
+
+                if (value) {
+                    for (let town of filterList) {
+                        if (isMatching(town.name, value)) {
+                            let showingDiv = createElement('div', town.name);
+
+                            filterResult.appendChild(showingDiv);
+                        }
+                    }
+                }
+            });
+        })
+        .catch(() => {
+            const button = createElement('button', 'Повторить');
+            const infoDiv = createElement('div', 'Не удалось загрузить города...');
+
+            filterResult.appendChild(infoDiv);
+            filterResult.appendChild(button);
+            button.addEventListener('click', () => {
+                filterResult.innerHTML = '';
+                loadingBlock.style.display = 'block';
+                filterBlock.style.display = 'none';
+                filterFunc();
+            });
+            dispBlock();
+        });
 }
 
-tryToLoadTowns();
-
-filterInput.addEventListener('keyup', function () {
-    let value = this.value.trim(),
-        filteredTowns = towns.filter((item) => isMatching(item.name, value));
-
-    filterResult.innerHTML = '';
-    filteredTowns.forEach((item) => {
-        filterResult.innerHTML += `<div>${item.name}</div>`;
-    });
-});
-
-filterReload.addEventListener('click', tryToLoadTowns);
+filterFunc();
 
 export {
     loadTowns,
