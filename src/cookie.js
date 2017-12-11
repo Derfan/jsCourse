@@ -1,3 +1,4 @@
+import { createCookie, deleteCookie } from './index';
 /**
  * ДЗ 7.2 - Создать редактор cookie с возможностью фильтрации
  *
@@ -7,7 +8,7 @@
  * - удалить (при нажатии на кнопку, выбранная cookie удаляется из браузера и таблицы)
  *
  * На странице должна быть форма для добавления новой cookie:
- * - имя
+ * - имя 
  * - значение
  * - добавить (при нажатии на кнопку, в браузер и таблицу добавляется новая cookie с указанным именем и значением)
  *
@@ -39,8 +40,46 @@ let addValueInput = homeworkContainer.querySelector('#add-value-input');
 let addButton = homeworkContainer.querySelector('#add-button');
 let listTable = homeworkContainer.querySelector('#list-table tbody');
 
-filterNameInput.addEventListener('keyup', function() {
+function isMatching(full, chunk) {
+    return full.toLowerCase().includes(chunk.toLowerCase());
+}
+
+function cookieListSort(cookies, filter) {
+    listTable.innerHTML = '';
+    for (let item in cookies) {
+        if (isMatching(item, filter) || isMatching(cookies[item], filter)) {
+            let newRow = `
+                <tr>
+                    <td>${item}</td><td>${cookies[item]}</td><td><button id="${item}">Удалить</button></td>
+                </tr>
+            `;
+
+            listTable.insertAdjacentHTML('beforeend', newRow);
+            listTable.querySelector(`#${item}`).addEventListener('click', () => {
+                deleteCookie(item);
+                cookieListSort(getCookies(), filterNameInput.value);
+            })
+        }
+    }
+}
+
+function getCookies() {
+    return document.cookie
+        .split('; ')
+        .filter(Boolean)
+        .map(cookie => cookie.match(/^([^=]+)=(.+)/))
+        .reduce((obj, [, name, value]) => {
+            obj[name] = value;
+
+            return obj;
+        }, {});
+}
+
+filterNameInput.addEventListener('keyup', () => {
+    cookieListSort(getCookies(), filterNameInput.value)
 });
 
 addButton.addEventListener('click', () => {
+    createCookie(addNameInput.value.trim(), addValueInput.value.trim());
+    cookieListSort(getCookies(), filterNameInput.value);
 });

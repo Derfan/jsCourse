@@ -37,7 +37,7 @@ function createCookie(name, value) {
  * @param name - имя
  */
 function deleteCookie(name) {
-    document.cookie = `${name}=; path=/; expires=${new Date(0).toUTCString()}`;
+    document.cookie = `${name}=; path=/; expires=${new Date(0)}`;
 }
 
 export {
